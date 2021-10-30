@@ -33,7 +33,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
                     const cursor= spotCollection.find({})
                     const result= await cursor.toArray()
                     res.send(result)
-                    console.log("ok")
+                    
                     
                 })
                

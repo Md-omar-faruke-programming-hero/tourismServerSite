@@ -65,6 +65,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
                 // post api
                 app.post("/bookData",async(req,res)=>{
+                    console.log(req.body)
                     const name=req.body.name;
                     const email=req.body.email;
                     const spot=req.body.spot;
@@ -102,6 +103,24 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
                     const result= await bookCollection.deleteOne(query)
                     res.json(result)
                     console.log(result)
+                })
+
+                // update api
+                app.put("/bookData/:id",async(req,res)=>{
+                    const id=req.params.id;
+                    const query={_id:ObjectId(id)}
+                    const status=req.body.status
+
+                    const options = { upsert: true };
+                    const doc={
+                        $set:{
+                            status:status
+                        }
+                    }
+            const result= await bookCollection.updateOne(query,doc,options)
+            console.log(result);
+            res.json(result)
+
                 })
             }
             finally{
